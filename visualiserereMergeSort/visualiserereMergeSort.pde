@@ -15,24 +15,19 @@ void setup() {
   for (int i = 0; i < soyler.size(); i++) {
     arr[i] = soyler.get(i);
   }
-
 }
 
-final int s = 10;
+final int s = 2;
 int f;
 
 ArrayList<Soyle> soyler;
 Soyle[] arr;
-boolean erFerdig;
-boolean harFlyttet;
-
 int curr_size = 1;
 int left_start;
 
-
-
 void draw() {
   tegnAlle();
+  //loadPixels();
   int n = arr.length;
 
   if (curr_size > n -1) {
@@ -40,15 +35,14 @@ void draw() {
     noLoop();
     return;
   }
-  
+
   if (left_start > n-1) {
     left_start = 0;
     curr_size *= 2;
-    
   } else {
     int mid = Math.min(left_start + curr_size - 1, n-1);
     int right_end = Math.min(left_start + 2*curr_size - 1, n-1);
-    
+
     int i, j, k;
     int n1 = mid - left_start + 1;
     int n2 = right_end - mid;
@@ -61,16 +55,21 @@ void draw() {
     for (j = 0; j < n2; j++)
       R[j] = arr[mid + 1+ j];
 
-    
+
     i = 0;
     j = 0;
     k = left_start;
     while (i < n1 && j < n2) {
       if (L[i].h <= R[j].h) {
+        arr[k].vis(color(0, 255, 0));
         arr[k] = L[i];
+        arr[k].vis(color(0, 0, 255));
+
         i++;
       } else {
+        arr[k].vis(color(255, 0, 0));
         arr[k] = R[j];
+        arr[k].vis(color(80, 100, 200));
         j++;
       }
       k++;
@@ -91,51 +90,23 @@ void draw() {
     }
     left_start += 2*curr_size;
   }
-  delay(frameCount % 100);
+  delay(curr_size);
+  //updatePixels();
 }
 
 public void visAlle() {
   tegnAlle();
 }
 
-void bytt(Soyle[] arr, int x, int y) {
-  //println("BYTTER " + x + " og " + y);
-  /*
-  int tmp = arr[x].x;
-   arr[x].x = arr[y].x;
-   arr[y].x = tmp;
-   */
-  Soyle tmp = arr[x];
-  arr[x] = arr[y];
-  arr[y] = tmp;
-}
-
-
 void tegnAlle() {
-  //  println("Tegner alle");
   clear();
-  /*
-   for(Soyle sl : arr) {
-   sl.vis(); 
-   }
-   */
-
   for (int i = 0; i < arr.length; i++) {
     arr[i].x = s * i;
-    //println("Tegner opp soyle på x " + arr[i].x + " med h " + arr[i].h);
     arr[i].vis();
   }
 }
 
-void mouseClicked() {
-  println(" \n STATS: ");
-  for (Soyle sl : arr) {
-    print(sl.h + ", ");
-  }
-}
-
-
-class Soyle implements Comparable<Soyle> {
+class Soyle {
   int x, y, h;
   color sfarge;
   Soyle(int x, int y, int h) {
@@ -153,14 +124,5 @@ class Soyle implements Comparable<Soyle> {
   void vis(color farge) {
     fill(farge);
     rect(x, height - h, s, h);
-  }
-
-  public int compareTo(Soyle annen) {
-    //Soyle andre = (Soyle) annen;
-    if (this.h > annen.h) {
-      return 1;
-    } else {
-      return -1;
-    }
   }
 }
