@@ -16,16 +16,13 @@ void setup() {
     arr[i] = soyler.get(i);
   }
 
-  //frameRate(4);
 }
 
-final int s = 2;
+final int s = 10;
 int f;
 
 ArrayList<Soyle> soyler;
 Soyle[] arr;
-//int i = 0; 
-//int j = 0;
 boolean erFerdig;
 boolean harFlyttet;
 
@@ -35,92 +32,66 @@ int left_start;
 
 
 void draw() {
-  //Arrays.sort(arr);
   tegnAlle();
   int n = arr.length;
 
   if (curr_size > n -1) {
     println("ferdig");
-    //noLoop();
-    //return;
+    noLoop();
+    return;
   }
-/*
-  if (left_start >= n-1) {
-    left_start = 0;
-    //curr_size *= 2;
-    //return;
-  }
-  */
-
-  int mid = Math.min(left_start + curr_size - 1, n-1);
-
-  int right_end = Math.min(left_start + 2*curr_size - 1, n-1);
-
-  //merge(arr, left_start, mid, right_end);
-  int i, j, k;
- 
-
-  int n1 = mid - left_start + 1;
-  int n2 = right_end - mid;
-
-  /* create temp arrays */
-  Soyle  L[] = new Soyle[n1];
-  Soyle  R[] = new Soyle[n2];
-
-  /* Copy data to temp arrays L[]
-   and R[] */
-  for (i = 0; i < n1; i++)
-    L[i] = arr[left_start + i];
-  for (j = 0; j < n2; j++)
-    R[j] = arr[mid + 1+ j];
-
-  /* Merge the temp arrays back into
-   arr[l..r]*/
-  i = 0;
-  j = 0;
-  k = left_start;
-  while (i < n1 && j < n2) {
-    if (L[i].h <= R[j].h) {
-      arr[k] = L[i];
-      i++;
-    } else {
-      arr[k] = R[j];
-      j++;
-    }
-    k++;
-  }
-
-  /* Copy the remaining elements of 
-   L[], if there are any */
-  while (i < n1)
-  {
-    arr[k] = L[i];
-    i++;
-    k++;
-  }
-
-  /* Copy the remaining elements of
-   R[], if there are any */
-  while (j < n2)
-  {
-    arr[k] = R[j];
-    j++;
-    k++;
-  }
-
-
-
-  //curr_size *= 2;
   
   if (left_start > n-1) {
     left_start = 0;
     curr_size *= 2;
-    //curr_size *= 2;
-    //return;
-  }else {
+    
+  } else {
+    int mid = Math.min(left_start + curr_size - 1, n-1);
+    int right_end = Math.min(left_start + 2*curr_size - 1, n-1);
+    
+    int i, j, k;
+    int n1 = mid - left_start + 1;
+    int n2 = right_end - mid;
+
+    Soyle  L[] = new Soyle[n1];
+    Soyle  R[] = new Soyle[n2];
+
+    for (i = 0; i < n1; i++)
+      L[i] = arr[left_start + i];
+    for (j = 0; j < n2; j++)
+      R[j] = arr[mid + 1+ j];
+
+    
+    i = 0;
+    j = 0;
+    k = left_start;
+    while (i < n1 && j < n2) {
+      if (L[i].h <= R[j].h) {
+        arr[k] = L[i];
+        i++;
+      } else {
+        arr[k] = R[j];
+        j++;
+      }
+      k++;
+    }
+
+    while (i < n1)
+    {
+      arr[k] = L[i];
+      i++;
+      k++;
+    }
+
+    while (j < n2)
+    {
+      arr[k] = R[j];
+      j++;
+      k++;
+    }
     left_start += 2*curr_size;
   }
-  delay(200);
+  delay(frameCount % 100);
 }
 
 public void visAlle() {
