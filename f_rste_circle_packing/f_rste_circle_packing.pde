@@ -13,7 +13,7 @@ class Dot {
  
 }
 
-final int n = 10000;
+final int n = 20000;
 List<List<Dot>> arr = new ArrayList<>(n);
 List<Dot> dots = new ArrayList<>();
 
