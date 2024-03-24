@@ -191,7 +191,8 @@ public void visAlle() {
 }
 
 void tegnAlle() {
-  clear();
+  fill(0);
+  rect(0, 0, width, height);
   for (int i = 0; i < arr.length; i++) {
     arr[i].x = s * i;
     arr[i].vis();
