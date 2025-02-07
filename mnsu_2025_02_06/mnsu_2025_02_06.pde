@@ -20,7 +20,7 @@ class Cord {
 };
 
 
-int truncateToMultiple(int multipleToRound, int multiple) {
+int truncateToMultiple(int numToRound, int multiple) {
   if (multiple == 0)
     return numToRound;
 
